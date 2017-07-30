@@ -47,17 +47,17 @@ public class fragment_dashboard  extends Fragment implements OnMapReadyCallback,
     Gson gson=new Gson();
 
     List<Marker> markers=new ArrayList<Marker>();
-    ProgressDialog progressDialog;
+    //ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         parentView = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        progressDialog=new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+//        progressDialog=new ProgressDialog(getContext());
+//        progressDialog.setMessage("Loading...");
+//        progressDialog.setCancelable(false);
+//       // progressDialog.show();
 
         try {
             MapsInitializer.initialize(getContext());
@@ -111,15 +111,9 @@ public class fragment_dashboard  extends Fragment implements OnMapReadyCallback,
 
         mMapView.setVisibility(View.VISIBLE);
         final Geocoder geocoder=new Geocoder(getContext(), Locale.getDefault());
-        //final GPSTracker gpsTracker=new GPSTracker(getContext());
 
         googleMap = mMap;
 
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            return;
-        }
-        //googleMap.setMyLocationEnabled(true);
         googleMap.getUiSettings().setZoomControlsEnabled(true);
 
         googleMap.setOnMarkerClickListener(this);
@@ -144,7 +138,7 @@ public class fragment_dashboard  extends Fragment implements OnMapReadyCallback,
 
 
         }
-        progressDialog.dismiss();
+       // progressDialog.dismiss();
 
 
     }

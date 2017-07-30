@@ -28,6 +28,7 @@ public class NavigationActivity extends AppCompatActivity
     private boolean doubleBackToExitPressedOnce = false;
     private ColoredSnackbar coloredSnackBar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
