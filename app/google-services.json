@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "907827684200",
+    "firebase_url": "https://project2-8e7ce.firebaseio.com",
+    "project_id": "project2-8e7ce",
+    "storage_bucket": "project2-8e7ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:907827684200:android:66c3a9bf2573c3bc",
+        "android_client_info": {
+          "package_name": "com.optimustechproject.project2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "907827684200-aiv6jr26797n3p5sg3tc15s8s5og7vl3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv-ghXF4SE3O-7dxavEj-sXjh9A-MPJAw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
