@@ -18,6 +18,9 @@ public class LoginDataumPOJO {
     @SerializedName("longitude")
     @Expose
     private String longitude;
+    @SerializedName("location")
+    @Expose
+    private String location;
     @SerializedName("gender")
     @Expose
     private String gender;
@@ -48,6 +51,14 @@ public class LoginDataumPOJO {
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getLongitude() {

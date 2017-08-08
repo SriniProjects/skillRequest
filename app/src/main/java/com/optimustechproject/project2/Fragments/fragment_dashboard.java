@@ -1,7 +1,9 @@
 package com.optimustechproject.project2.Fragments;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -12,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -24,6 +27,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
+import com.optimustechproject.project2.Activity.AllTrainings;
+import com.optimustechproject.project2.Activity.ProfileActivity;
 import com.optimustechproject.project2.Activity.TrainingDetails;
 import com.optimustechproject.project2.Models.TrainingsPOJO;
 import com.optimustechproject.project2.R;
@@ -45,7 +50,7 @@ public class fragment_dashboard  extends Fragment implements OnMapReadyCallback,
     static Geocoder geocoder;
     TrainingsPOJO data;
     Gson gson=new Gson();
-
+    Button profile,allTrainings;
     List<Marker> markers=new ArrayList<Marker>();
     //ProgressDialog progressDialog;
 
@@ -54,10 +59,24 @@ public class fragment_dashboard  extends Fragment implements OnMapReadyCallback,
                              Bundle savedInstanceState) {
         parentView = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-//        progressDialog=new ProgressDialog(getContext());
-//        progressDialog.setMessage("Loading...");
-//        progressDialog.setCancelable(false);
-//       // progressDialog.show();
+        profile=(Button)parentView.findViewById(R.id.profile);
+        allTrainings=(Button)parentView.findViewById(R.id.allTrainings);
+
+        allTrainings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), AllTrainings.class);
+                startActivity(intent);
+            }
+        });
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
         try {
             MapsInitializer.initialize(getContext());
@@ -146,10 +165,34 @@ public class fragment_dashboard  extends Fragment implements OnMapReadyCallback,
     @Override
     public boolean onMarkerClick(Marker marker) {
 
-        int ind=markers.indexOf(marker);
-        Intent intent=new Intent(getContext(), TrainingDetails.class);
-        intent.putExtra("index",ind);
-        startActivity(intent);
+        final int ind=markers.indexOf(marker);
+        //Toast.makeText(getContext(),String.valueOf(ind),Toast.LENGTH_LONG).show();
+        new AlertDialog.Builder(getContext()).setTitle(data.getTitle().get(ind))
+                .setMessage(data.getCategory().get(ind)+"\n"+data.getPrice().get(ind))
+                .setPositiveButton("View more", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent intent=new Intent(getContext(), TrainingDetails.class);
+                        intent.putExtra("index",ind);
+
+                        intent.putExtra("key_learning1",data.getKeyLearning1().get(ind));
+                        intent.putExtra("key_learning2",data.getKeyLearning1().get(ind));
+                        intent.putExtra("key_learning3",data.getKeyLearning1().get(ind));
+                        intent.putExtra("title",data.getTitle().get(ind));
+                        intent.putExtra("date",data.getDate().get(ind));
+                        intent.putExtra("training_id",data.getId().get(ind));
+                        intent.putExtra("desc",data.getDescription().get(ind));
+                        intent.putExtra("timings",data.getTimings().get(ind));
+                        intent.putExtra("duration",data.getDuration().get(ind));
+                        intent.putExtra("category",data.getCategory().get(ind));
+                        intent.putExtra("enquiry_status",data.getEnquiryStatus().get(ind));
+                        intent.putExtra("venue",data.getVenue().get(ind));
+                        intent.putExtra("availability",data.getAvailability().get(ind));
+                        startActivity(intent);
+
+                    }
+                }).create().show();
         //Toast.makeText(getContext(),String.valueOf(ind),Toast.LENGTH_SHORT).show();
         return false;
     }

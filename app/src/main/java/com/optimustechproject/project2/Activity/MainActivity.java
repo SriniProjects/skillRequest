@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
             progressDialog.show();
 
             final RegistrationRequest registrationRequest= ServiceGenerator.createService(RegistrationRequest.class);
-            Call<RegDataPOJO> call=registrationRequest.requestResponse(first_name.getText().toString(),last_name.getText().toString(),dob.getText().toString(),gender,mobile.getText().toString(),String.valueOf(l.latitude),String.valueOf(l.longitude),email.getText().toString(),pwd, FirebaseInstanceId.getInstance().getToken());
+            Call<RegDataPOJO> call=registrationRequest.requestResponse(first_name.getText().toString(),last_name.getText().toString(),dob.getText().toString(),gender,mobile.getText().toString(),String.valueOf(l.latitude),String.valueOf(l.longitude),email.getText().toString(),pwd,location.getText().toString(), FirebaseInstanceId.getInstance().getToken());
             Log.e("det",first_name.getText().toString()+last_name.getText().toString()+dob.getText().toString()+gender+mobile.getText().toString()+String.valueOf(l.latitude)+String.valueOf(l.longitude)+email.getText().toString()+password.getText().toString()+ FirebaseInstanceId.getInstance().getToken());
             call.enqueue(new Callback<RegDataPOJO>() {
                 @Override

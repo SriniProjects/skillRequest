@@ -31,7 +31,13 @@
             android:name=".Activity.NavigationActivity"
             android:label="@string/title_activity_navigation"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Activity.TrainingDetails"></activity>
+        <activity android:name=".Activity.TrainingDetails" />
+        <activity
+            android:name=".Activity.ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Activity.AllTrainings" />
+        <activity android:name=".Activity.CreateTraining"></activity>
     </application>
 
 </manifest>

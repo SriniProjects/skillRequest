@@ -16,6 +16,9 @@ public class TrainingsPOJO {
     @SerializedName("title")
     @Expose
     private List<String> title = null;
+    @SerializedName("category")
+    @Expose
+    private List<String> category = null;
     @SerializedName("key_learning1")
     @Expose
     private List<String> keyLearning1 = null;
@@ -52,6 +55,9 @@ public class TrainingsPOJO {
     @SerializedName("venue_longitude")
     @Expose
     private List<String> venueLongitude = null;
+    @SerializedName("enquiry_status")
+    @Expose
+    private List<String> enquiryStatus = null;
 
     public List<String> getId() {
         return id;
@@ -67,6 +73,14 @@ public class TrainingsPOJO {
 
     public void setTitle(List<String> title) {
         this.title = title;
+    }
+
+    public List<String> getCategory() {
+        return category;
+    }
+
+    public void setCategory(List<String> category) {
+        this.category = category;
     }
 
     public List<String> getKeyLearning1() {
@@ -163,5 +177,13 @@ public class TrainingsPOJO {
 
     public void setVenueLongitude(List<String> venueLongitude) {
         this.venueLongitude = venueLongitude;
+    }
+
+    public List<String> getEnquiryStatus() {
+        return enquiryStatus;
+    }
+
+    public void setEnquiryStatus(List<String> enquiryStatus) {
+        this.enquiryStatus = enquiryStatus;
     }
 }
