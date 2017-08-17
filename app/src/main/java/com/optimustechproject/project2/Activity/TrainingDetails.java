@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.optimustechproject.project2.app.ColoredSnackbar;
 import com.optimustechproject.project2.app.DbHandler;
 import com.optimustechproject.project2.app.NetworkCheck;
 import com.optimustechproject.project2.app.ServiceGenerator;
+import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +38,7 @@ public class TrainingDetails extends AppCompatActivity {
     int index,training_id;
     private ColoredSnackbar coloredSnackbar;
     ProgressDialog dialog;
+    ImageView header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class TrainingDetails extends AppCompatActivity {
 
         Toolbar toolbar;
         toolbar=(Toolbar)findViewById(R.id.anim_toolbar);
-        toolbar.setTitle(data.getTitle().get(index));
+        toolbar.setTitle(getIntent().getExtras().getString("title"));
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -55,6 +58,12 @@ public class TrainingDetails extends AppCompatActivity {
         enquire=(Button)findViewById(R.id.enquire);
         register=(Button)findViewById(R.id.register);
 
+        if(getIntent().getExtras().getString("from").equals("createdTrainings")){
+            enquire.setVisibility(View.GONE);
+            register.setVisibility(View.GONE);
+        }
+
+        header=(ImageView)findViewById(R.id.header);
         key_learning=(TextView)findViewById(R.id.key_learnings);
         desc=(TextView)findViewById(R.id.desc);
         availability=(TextView)findViewById(R.id.availability);
@@ -70,6 +79,12 @@ public class TrainingDetails extends AppCompatActivity {
         timings.setText(getIntent().getExtras().getString("timings"));
         duration.setText(getIntent().getExtras().getString("duration"));
         venue.setText(getIntent().getExtras().getString("venue"));
+
+        Picasso
+                .with(TrainingDetails.this)
+                .load(getIntent().getExtras().getString("photo"))
+                .placeholder(R.mipmap.ic_launcher)
+                .into(header);
 
         if(getIntent().getExtras().getString("enquiry_status").equals("1")){
             enquire.setText("Already enquired");

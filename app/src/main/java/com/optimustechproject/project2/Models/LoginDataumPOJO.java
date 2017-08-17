@@ -33,6 +33,15 @@ public class LoginDataumPOJO {
     @SerializedName("token")
     @Expose
     private String token;
+    @SerializedName("dob")
+    @Expose
+    private String dob;
+    @SerializedName("photo")
+    @Expose
+    private String photo;
+    @SerializedName("pwd")
+    @Expose
+    private String pwd;
     @SerializedName("trainings")
     @Expose
     private TrainingsPOJO trainings;
@@ -69,6 +78,22 @@ public class LoginDataumPOJO {
         this.longitude = longitude;
     }
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
     public String getGender() {
         return gender;
     }
@@ -76,6 +101,7 @@ public class LoginDataumPOJO {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
 
     public String getMobile() {
         return mobile;
@@ -91,6 +117,14 @@ public class LoginDataumPOJO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String photo) {
+        this.pwd = pwd;
     }
 
     public String getToken() {

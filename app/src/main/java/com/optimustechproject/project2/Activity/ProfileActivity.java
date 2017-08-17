@@ -18,12 +18,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,7 @@ import com.optimustechproject.project2.app.ColoredSnackbar;
 import com.optimustechproject.project2.app.DbHandler;
 import com.optimustechproject.project2.app.NetworkCheck;
 import com.optimustechproject.project2.app.ServiceGenerator;
+import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,7 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        data=gson.fromJson(DbHandler.getString(this,"login_data","}"),LoginDataumPOJO.class);
+        data=gson.fromJson(DbHandler.getString(this,"login_data","{}"),LoginDataumPOJO.class);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -106,6 +109,8 @@ public class ProfileActivity extends AppCompatActivity {
         RecyclerView mrecyclerView;
         RecyclerView.LayoutManager manager;
         adapter_training_item mAdapter;
+        ImageView img,pencil;
+        Gson gson=new Gson();
 
         @Override
         public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -118,11 +123,51 @@ public class ProfileActivity extends AppCompatActivity {
                 email=(TextView)rootView.findViewById(R.id.email1);
                 mobile=(TextView)rootView.findViewById(R.id.mobile1);
                 location=(TextView)rootView.findViewById(R.id.location1);
+                img=(ImageView)rootView.findViewById(R.id.imag);
+                pencil=(ImageView)rootView.findViewById(R.id.pencil);
+
+                data=gson.fromJson(DbHandler.getString(getContext(),"login_data","{}"),LoginDataumPOJO.class);
 
                 name.setText(data.getName());
                 email.setText(data.getEmail());
                 mobile.setText(data.getMobile());
                 location.setText(data.getLocation());
+
+                pencil.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent=new Intent(getContext(),MainActivity.class);
+                        intent.putExtra("status","update");
+                        if(data.getPwd().equals("")){
+                            intent.putExtra("regType","google");
+                            intent.putExtra("name",data.getName());
+                            intent.putExtra("email",data.getEmail());
+                        }
+                        else{
+                            intent.putExtra("regType","normal");
+                        }
+                        startActivity(intent);
+                    }
+                });
+
+                Log.e("gen",String.valueOf(gson.toJson(data)));
+                if(data.getGender().equals("M")) {
+                    Picasso
+                            .with(getContext())
+                            .load(data.getPhoto())
+                            .placeholder(R.drawable.male_account)
+                            .into(img);
+                }
+                else{
+                    Picasso
+                            .with(getContext())
+                            .load(data.getPhoto())
+                            .placeholder(R.drawable.female_account)
+                            .into(img);
+
+                }
+
 
                 location.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -157,7 +202,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     mrecyclerView.setHasFixedSize(true);
                                     manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
                                     mrecyclerView.setLayoutManager(manager);
-                                    mAdapter = new adapter_training_item(getContext(), response.body().getTrainings());
+                                    mAdapter = new adapter_training_item(getContext(), response.body().getTrainings(),"createdTrainings");
                                     mrecyclerView.setAdapter(mAdapter);
                                 } else {
                                     Toast.makeText(getContext(), "Session Expired", Toast.LENGTH_LONG).show();
@@ -232,7 +277,7 @@ public class ProfileActivity extends AppCompatActivity {
                 case 1:
                     return "Created Trainings";
                 case 2:
-                    return "Registered Trainings";
+                    return "Purchased Trainings";
             }
             return null;
         }

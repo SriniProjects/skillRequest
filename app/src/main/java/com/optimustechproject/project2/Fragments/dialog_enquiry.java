@@ -15,13 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+
 import com.optimustechproject.project2.Activity.MainActivity;
 import com.optimustechproject.project2.Activity.NavigationActivity;
 import com.optimustechproject.project2.Activity.TrainingDetails;
@@ -51,7 +45,6 @@ public class dialog_enquiry extends DialogFragment {
     View view;
     ProgressDialog dialog;
     int training_id;
-    public RequestQueue queue;
     public EditText message;
     public Button send;
     private ColoredSnackbar coloredSnackbar;
@@ -71,7 +64,6 @@ public class dialog_enquiry extends DialogFragment {
         view = inflater.inflate(R.layout.dialog_enquiry, null);
         builder.setView(view);
 
-        queue = Volley.newRequestQueue(getContext());
         message = (EditText) view.findViewById(R.id.enquiry);
         send = (Button)view.findViewById(R.id.send);
         send.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +90,7 @@ public class dialog_enquiry extends DialogFragment {
                                 dialog.dismiss();
                                 if (response.code() == 200) {
                                     if (!response.body().getError()) {
-                                        send_enquiry(s);
+                                       // send_enquiry(s);
                                     } else {
                                         Toast.makeText(getContext(),"Session Expired",Toast.LENGTH_LONG).show();
                                         DbHandler.unsetSession(getContext(),"isForcedLoggedOut");
@@ -130,46 +122,7 @@ public class dialog_enquiry extends DialogFragment {
         return  builder.create();
     }
 
-    public void send_enquiry(final String s) {
-        dialog = new ProgressDialog(getContext());
-        dialog.setMessage("Please wait !!");
-        dialog.show();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_ROOT,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        dialog.dismiss();
-                        Log.i("response", response);
 
-                        Toast.makeText(getContext(), "Message send!!", Toast.LENGTH_LONG).show();
-                        TrainingDetails.change();
-                        //dismiss();
-                        Intent intent=new Intent(getContext(), NavigationActivity.class);
-                        startActivity(intent);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "Message not send!!", Toast.LENGTH_LONG).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                SharedPreferences sh = getActivity().getSharedPreferences("user", MODE_PRIVATE);
-                params.put("type", "enquiry");
-                   /* params.put("name",sh.getString("name",null));
-                    params.put("email",sh.getString("email",null));
-                    params.put("contact",sh.getString("contact",null));  */
-                params.put("message", s);
-                params.put("training_id", getArguments().getInt("training_id") + "");
-                params.put("user_id", sh.getInt("usr_id", 0) + "");
-                return params;
-            }
-        };
-        queue.add(stringRequest);
-    }
 
 
 

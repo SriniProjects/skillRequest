@@ -132,7 +132,7 @@
                     android:text="From timing"
                     android:id="@+id/fTime"
                     android:layout_alignParentStart="true"
-
+                    android:visibility="gone"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"/>
 
@@ -143,6 +143,7 @@
                     android:layout_span="2"
                     android:id="@+id/fTime_1"
                     android:hint="HH:mm"
+                    android:visibility="gone"
                     android:textColor="@color/colorPrimary"
                     android:focusable="false"
                     android:textSize="17dp" />
@@ -154,7 +155,7 @@
                     android:text="To Timing"
                     android:id="@+id/tTime"
                     android:layout_alignParentStart="true"
-
+                    android:visibility="gone"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"/>
 
@@ -165,6 +166,7 @@
                     android:layout_span="2"
                     android:id="@+id/tTime_1"
                     android:hint="HH:mm"
+                    android:visibility="gone"
                     android:textColor="@color/colorPrimary"
                     android:focusable="false"
                     android:textSize="17dp" />

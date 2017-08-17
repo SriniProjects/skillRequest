@@ -3,15 +3,18 @@ package com.optimustechproject.project2.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.optimustechproject.project2.Activity.TrainingDetails;
 import com.optimustechproject.project2.Models.TrainingsPOJO;
 import com.optimustechproject.project2.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +28,13 @@ public class adapter_training_item extends RecyclerView.Adapter<adapter_training
 
     TrainingsPOJO data;
     Context context;
+    String from;
     List<Integer> ind=new ArrayList<Integer>();
 
-    public adapter_training_item(Context context,TrainingsPOJO data) {
+    public adapter_training_item(Context context,TrainingsPOJO data,String from) {
         this.data=data;
         this.context=context;
+        this.from=from;
         for(int i=0;i<data.getTitle().size();i++){
             ind.add(i);
         }
@@ -37,12 +42,14 @@ public class adapter_training_item extends RecyclerView.Adapter<adapter_training
 
     public class view_holder extends RecyclerView.ViewHolder{
         TextView title,price,location;
+        ImageView imageView;
         public view_holder(View itemView) {
             super(itemView);
 
             title=(TextView)itemView.findViewById(R.id.title);
             price=(TextView)itemView.findViewById(R.id.price);
             location=(TextView)itemView.findViewById(R.id.location);
+            imageView=(ImageView) itemView.findViewById(R.id.imageView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -50,6 +57,7 @@ public class adapter_training_item extends RecyclerView.Adapter<adapter_training
                     int in=ind.get(getAdapterPosition());
                     Intent intent=new Intent(context, TrainingDetails.class);
                     intent.putExtra("index",in);
+                    intent.putExtra("from",from);
                     intent.putExtra("key_learning1",data.getKeyLearning1().get(in));
                     intent.putExtra("key_learning2",data.getKeyLearning1().get(in));
                     intent.putExtra("key_learning3",data.getKeyLearning1().get(getAdapterPosition()));
@@ -62,6 +70,7 @@ public class adapter_training_item extends RecyclerView.Adapter<adapter_training
                     intent.putExtra("category",data.getCategory().get(in));
                     intent.putExtra("enquiry_status",data.getEnquiryStatus().get(in));
                     intent.putExtra("venue",data.getVenue().get(in));
+                    intent.putExtra("photo",data.getPhoto().get(in));
                     intent.putExtra("availability",data.getAvailability().get(in));
                     context.startActivity(intent);
                 }
@@ -112,10 +121,18 @@ public class adapter_training_item extends RecyclerView.Adapter<adapter_training
 
     @Override
     public void onBindViewHolder(adapter_training_item.view_holder holder, int position) {
+
+
        holder.title.setText(data.getTitle().get(position));
         holder.price.setText(data.getPrice().get(position));
        // Toast.makeText(context,data.getEnquiryStatus().get(position),Toast.LENGTH_LONG).show();
         holder.location.setText(data.getVenue().get(position));
+        Picasso
+                .with(context)
+                .load(data.getPhoto().get(position))
+                .placeholder(R.mipmap.ic_launcher)
+                .into(holder.imageView);
+
     }
 
     @Override

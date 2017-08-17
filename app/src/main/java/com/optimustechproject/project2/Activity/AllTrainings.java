@@ -49,7 +49,7 @@ public class AllTrainings extends AppCompatActivity {
         mrecyclerView.setHasFixedSize(true);
         manager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         mrecyclerView.setLayoutManager(manager);
-        mAdapter = new adapter_training_item(this,data);
+        mAdapter = new adapter_training_item(this,data,"allTrainings");
         mrecyclerView.setAdapter(mAdapter);
 
     }

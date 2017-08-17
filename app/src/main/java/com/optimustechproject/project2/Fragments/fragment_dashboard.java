@@ -175,7 +175,7 @@ public class fragment_dashboard  extends Fragment implements OnMapReadyCallback,
 
                         Intent intent=new Intent(getContext(), TrainingDetails.class);
                         intent.putExtra("index",ind);
-
+                        intent.putExtra("from","dashboard");
                         intent.putExtra("key_learning1",data.getKeyLearning1().get(ind));
                         intent.putExtra("key_learning2",data.getKeyLearning1().get(ind));
                         intent.putExtra("key_learning3",data.getKeyLearning1().get(ind));
@@ -188,6 +188,7 @@ public class fragment_dashboard  extends Fragment implements OnMapReadyCallback,
                         intent.putExtra("category",data.getCategory().get(ind));
                         intent.putExtra("enquiry_status",data.getEnquiryStatus().get(ind));
                         intent.putExtra("venue",data.getVenue().get(ind));
+                        intent.putExtra("photo",data.getPhoto().get(ind));
                         intent.putExtra("availability",data.getAvailability().get(ind));
                         startActivity(intent);
 

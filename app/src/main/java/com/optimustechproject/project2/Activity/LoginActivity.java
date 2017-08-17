@@ -17,12 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -124,6 +118,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onClick(View v) {
                 Intent intent=new Intent(LoginActivity.this,MainActivity.class);
                 intent.putExtra("regType","normal");
+                intent.putExtra("status","registration");
                 startActivity(intent);
             }
         });
@@ -189,7 +184,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             progressDialog.show();
 
             CheckLoginRequest checkLoginRequest = ServiceGenerator.createService(CheckLoginRequest.class);
-            Call<CheckLoginPOJO> call = checkLoginRequest.requestResponse(email);
+            Call<CheckLoginPOJO> call = checkLoginRequest.requestResponse(email,FirebaseInstanceId.getInstance().getToken());
             call.enqueue(new Callback<CheckLoginPOJO>() {
 
 
@@ -208,6 +203,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             Intent intent=new Intent(LoginActivity.this,MainActivity.class);
                             intent.putExtra("name",name);
                             intent.putExtra("email",email);
+                            intent.putExtra("status","registration");
                             intent.putExtra("regType","google");
                             startActivity(intent);
 

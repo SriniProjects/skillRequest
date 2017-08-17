@@ -34,6 +34,9 @@ public class TrainingsPOJO {
     @SerializedName("duration")
     @Expose
     private List<String> duration = null;
+    @SerializedName("photo")
+    @Expose
+    private List<String> photo = null;
     @SerializedName("availability")
     @Expose
     private List<String> availability = null;
@@ -123,6 +126,14 @@ public class TrainingsPOJO {
         this.duration = duration;
     }
 
+    public List<String> getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(List<String> photo) {
+        this.photo = photo;
+    }
+
     public List<String> getAvailability() {
         return availability;
     }
@@ -186,4 +197,5 @@ public class TrainingsPOJO {
     public void setEnquiryStatus(List<String> enquiryStatus) {
         this.enquiryStatus = enquiryStatus;
     }
+
 }
