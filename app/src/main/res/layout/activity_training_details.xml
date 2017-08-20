@@ -260,7 +260,7 @@
                android:layout_weight="1"
                android:background="@color/colorAccent"
                android:id="@+id/register"
-               android:text="Register"
+               android:text="Buy"
                android:textStyle="bold"
                android:layout_marginLeft="5dp"
                android:textColor="#fff"/>

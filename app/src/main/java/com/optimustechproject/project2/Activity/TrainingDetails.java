@@ -22,6 +22,7 @@ import com.optimustechproject.project2.Models.TrainingsPOJO;
 import com.optimustechproject.project2.R;
 import com.optimustechproject.project2.app.ColoredSnackbar;
 import com.optimustechproject.project2.app.DbHandler;
+import com.optimustechproject.project2.app.ImageTransform;
 import com.optimustechproject.project2.app.NetworkCheck;
 import com.optimustechproject.project2.app.ServiceGenerator;
 import com.squareup.picasso.Picasso;
@@ -84,6 +85,7 @@ public class TrainingDetails extends AppCompatActivity {
                 .with(TrainingDetails.this)
                 .load(getIntent().getExtras().getString("photo"))
                 .placeholder(R.mipmap.ic_launcher)
+                .transform(new ImageTransform())
                 .into(header);
 
         if(getIntent().getExtras().getString("enquiry_status").equals("1")){

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.optimustechproject.project2.Activity.TrainingDetails;
 import com.optimustechproject.project2.Models.TrainingsPOJO;
 import com.optimustechproject.project2.R;
+import com.optimustechproject.project2.app.ImageTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -79,37 +80,9 @@ public class adapter_training_item extends RecyclerView.Adapter<adapter_training
         }
     }
 
-    public void filter(String text) {
-        ArrayList<String> title=new ArrayList<String>();
-        ArrayList<String> price=new ArrayList<String>();
-        ArrayList<String> location=new ArrayList<String>();
-        ind=new ArrayList<Integer>();
-        if(text.isEmpty()){
-            for(int i=0;i < data.getTitle().size();i++){
-                title.add(data.getTitle().get(i));
-                price.add(data.getPrice().get(i));
-                location.add(data.getVenue().get(i));
-                ind.add(i);
-            }
-            //items=temp;
-            data.setTitle(title);
-            data.setVenue(location);
-            data.setPrice(price);
-        } else{
-            text = text.toLowerCase();
-            for(int i=0;i < data.getTitle().size();i++){
-                if(data.getTitle().get(i).toLowerCase().contains(text)){
-                    title.add(data.getTitle().get(i));
-                    price.add(data.getPrice().get(i));
-                    location.add(data.getVenue().get(i));
-                    ind.add(i);
-                }
-            }
-           // items=temp;
-            data.setTitle(title);
-            data.setVenue(location);
-            data.setPrice(price);
-        }
+    public void setFilter(TrainingsPOJO pojo) {
+        data=null;
+        data=pojo;
         notifyDataSetChanged();
     }
 
@@ -124,13 +97,14 @@ public class adapter_training_item extends RecyclerView.Adapter<adapter_training
 
 
        holder.title.setText(data.getTitle().get(position));
-        holder.price.setText(data.getPrice().get(position));
+        holder.price.setText("Rs. "+data.getPrice().get(position));
        // Toast.makeText(context,data.getEnquiryStatus().get(position),Toast.LENGTH_LONG).show();
         holder.location.setText(data.getVenue().get(position));
         Picasso
                 .with(context)
                 .load(data.getPhoto().get(position))
                 .placeholder(R.mipmap.ic_launcher)
+                .transform(new ImageTransform())
                 .into(holder.imageView);
 
     }

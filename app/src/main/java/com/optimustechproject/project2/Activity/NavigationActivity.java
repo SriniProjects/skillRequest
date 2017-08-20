@@ -23,19 +23,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.optimustechproject.project2.Adapter.adapter_training_item;
+import com.optimustechproject.project2.Fragments.fragment_about;
 import com.optimustechproject.project2.Fragments.fragment_dashboard;
 import com.optimustechproject.project2.Interface.CreatedTrainingsRequest;
 import com.optimustechproject.project2.Interface.TrainingDetailsRequest;
 import com.optimustechproject.project2.Models.CreatedTrainingsPOJO;
+import com.optimustechproject.project2.Models.LoginDataumPOJO;
 import com.optimustechproject.project2.R;
 import com.optimustechproject.project2.app.ColoredSnackbar;
 import com.optimustechproject.project2.app.DbHandler;
+import com.optimustechproject.project2.app.ImageTransform;
 import com.optimustechproject.project2.app.NetworkCheck;
 import com.optimustechproject.project2.app.ServiceGenerator;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,12 +56,16 @@ public class NavigationActivity extends AppCompatActivity
     ProgressDialog progressDialog;
     Gson gson=new Gson();
     ImageView notification;
+    LoginDataumPOJO dataumPOJO;
+    Toolbar toolbar;
+    int flg=0;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -72,6 +83,8 @@ public class NavigationActivity extends AppCompatActivity
 
             }
         });
+
+        dataumPOJO=gson.fromJson(DbHandler.getString(this,"login_data","{}"),LoginDataumPOJO.class);
 
         if(NetworkCheck.isNetworkAvailable(this)){
             progressDialog = new ProgressDialog(NavigationActivity.this);
@@ -112,8 +125,22 @@ public class NavigationActivity extends AppCompatActivity
             coloredSnackBar.alert(snackbar).show();
         }
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View hview=navigationView.getHeaderView(0);
+        ImageView profile=(ImageView) hview.findViewById(R.id.profile);
+        TextView name=(TextView)hview.findViewById(R.id.name);
+        TextView email=(TextView)hview.findViewById(R.id.email);
+
+        name.setText(dataumPOJO.getName());
+        email.setText(dataumPOJO.getEmail());
+            Picasso
+                    .with(this)
+                    .load(dataumPOJO.getPhoto())
+                    .placeholder(R.drawable.ic_account_circle_white_48dp)
+                    .transform(new ImageTransform())
+                    .into(profile);
 
         Fragment fragment=null;
         Class fragmentClass=null;
@@ -131,7 +158,7 @@ public class NavigationActivity extends AppCompatActivity
             public void onBackStackChanged() {
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.flContent);
                 if (f != null) {
-                    //updateTitleAndDrawer(f);
+                    updateTitle(f);
                 }
 
             }
@@ -139,45 +166,112 @@ public class NavigationActivity extends AppCompatActivity
 
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.navigation, menu);
-//        return true;
-//    }
+    public void updateTitle(Fragment f){
+        if(f.getClass().getName().equals("fragment_dashboard")){
+            setTitle("Dashboard");
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+        }
+        if(f.getClass().getName().equals("fragment_about")){
+            setTitle("About Us");
+
+        }
+
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
+        if (id == R.id.home) {
+            Fragment fragment=null;
+            Class fragmentClass=null;
+            fragmentClass=fragment_dashboard.class;
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            replaceFragment(fragment);
+            getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+
+                @Override
+                public void onBackStackChanged() {
+                    Fragment f = getSupportFragmentManager().findFragmentById(R.id.flContent);
+                    if (f != null) {
+                        updateTitle(f);
+                    }
+
+                }
+            });
+            flg=0;
+
+            item.setChecked(true);
+
         } else if (id == R.id.create_training) {
             Intent intent=new Intent(NavigationActivity.this,CreateTraining.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.about_us) {
 
-        } else if (id == R.id.nav_manage) {
+            Fragment fragment=null;
+            Class fragmentClass=null;
+            fragmentClass=fragment_about.class;
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            replaceFragment(fragment);
+            getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
 
-        } else if (id == R.id.logout) {
-            DbHandler.unsetSession(NavigationActivity.this,"logout");
+                @Override
+                public void onBackStackChanged() {
+                    Fragment f = getSupportFragmentManager().findFragmentById(R.id.flContent);
+                    if (f != null) {
+                        updateTitle(f);
+                    }
 
-        } else if (id == R.id.nav_send) {
+                }
+            });
+            flg=1;
 
+            item.setChecked(true);
+
+        } else if (id == R.id.sign_out) {
+
+            new AlertDialog.Builder(NavigationActivity.this).setTitle("Logout").setMessage("Are you sure you want to logout?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    DbHandler.unsetSession(NavigationActivity.this,"logout");
+                }
+            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            }).create().show();
+
+        } else if (id == R.id.exit) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+        }
+        else if(id==R.id.my_noti){
+            startActivity(new Intent(NavigationActivity.this,NotificationActivity.class));
+        }
+        else if(id==R.id.all_trainings){
+            Intent intent=new Intent(NavigationActivity.this, AllTrainings.class);
+            startActivity(intent);
+        }
+        else if(id==R.id.my_profile){
+            Intent intent=new Intent(NavigationActivity.this, ProfileActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -202,23 +296,53 @@ public class NavigationActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            this.finishAffinity();
-            return;
-        }
 
-        this.doubleBackToExitPressedOnce = true;
-
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Press back again to exit", Snackbar.LENGTH_SHORT);
-        coloredSnackBar.warning(snackbar).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
+        if(flg==0) {
+            if (doubleBackToExitPressedOnce) {
+                this.finishAffinity();
+                return;
             }
-        }, 2000);
+
+            this.doubleBackToExitPressedOnce = true;
+
+            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Press back again to exit", Snackbar.LENGTH_SHORT);
+            coloredSnackBar.info(snackbar).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        }
+        else{
+            Fragment fragment=null;
+            Class fragmentClass=null;
+            fragmentClass=fragment_dashboard.class;
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            replaceFragment(fragment);
+            getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+
+                @Override
+                public void onBackStackChanged() {
+                    Fragment f = getSupportFragmentManager().findFragmentById(R.id.flContent);
+                    if (f != null) {
+                        updateTitle(f);
+                    }
+
+                }
+            });
+            flg=0;
+
+            navigationView.setCheckedItem(0);
+        }
     }
+
 
 }

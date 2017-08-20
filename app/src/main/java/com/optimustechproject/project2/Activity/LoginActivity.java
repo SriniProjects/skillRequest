@@ -312,7 +312,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         this.doubleBackToExitPressedOnce = true;
 
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Press back again to exit", Snackbar.LENGTH_SHORT);
-        coloredSnackBar.warning(snackbar).show();
+        coloredSnackBar.info(snackbar).show();
 
         new Handler().postDelayed(new Runnable() {
 

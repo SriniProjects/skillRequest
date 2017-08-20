@@ -212,23 +212,6 @@
                 android:textStyle="bold"
                 android:background="@android:color/holo_red_dark"
                 />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="3dp"
-                />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Facebook"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/fb"
-                android:textColor="#ffffff"
-                android:textStyle="bold"
-                android:background="@color/colorPrimaryDark"
-                />
         </LinearLayout>
             </LinearLayout>
         </ScrollView>

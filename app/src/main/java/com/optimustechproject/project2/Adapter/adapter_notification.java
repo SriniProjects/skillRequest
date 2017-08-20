@@ -72,7 +72,9 @@ public class adapter_notification extends RecyclerView.Adapter<adapter_notificat
                 Toast.makeText(context,"Notification removed",Toast.LENGTH_LONG).show();
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(0,data.size());
-                //context.startActivity(new Intent(context,NotificationActivity.class));
+                if(data.size()==0) {
+                    context.startActivity(new Intent(context, NotificationActivity.class));
+                }
             }
         });
 

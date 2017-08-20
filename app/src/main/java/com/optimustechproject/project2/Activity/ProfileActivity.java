@@ -40,6 +40,7 @@ import com.optimustechproject.project2.Models.TrainingsPOJO;
 import com.optimustechproject.project2.R;
 import com.optimustechproject.project2.app.ColoredSnackbar;
 import com.optimustechproject.project2.app.DbHandler;
+import com.optimustechproject.project2.app.ImageTransform;
 import com.optimustechproject.project2.app.NetworkCheck;
 import com.optimustechproject.project2.app.ServiceGenerator;
 import com.squareup.picasso.Picasso;
@@ -152,21 +153,27 @@ public class ProfileActivity extends AppCompatActivity {
                 });
 
                 Log.e("gen",String.valueOf(gson.toJson(data)));
-                if(data.getGender().equals("M")) {
-                    Picasso
-                            .with(getContext())
-                            .load(data.getPhoto())
-                            .placeholder(R.drawable.male_account)
-                            .into(img);
-                }
-                else{
-                    Picasso
-                            .with(getContext())
-                            .load(data.getPhoto())
-                            .placeholder(R.drawable.female_account)
-                            .into(img);
-
-                }
+//                if(data.getGender().equals("M")) {
+//                    Picasso
+//                            .with(getContext())
+//                            .load(data.getPhoto())
+//                            .placeholder(R.drawable.male_account)
+//                            .into(img);
+//                }
+//                else{
+//                    Picasso
+//                            .with(getContext())
+//                            .load(data.getPhoto())
+//                            .placeholder(R.drawable.female_account)
+//                            .into(img);
+//
+//                }
+                Picasso
+                        .with(getContext())
+                        .load(data.getPhoto())
+                        .placeholder(R.drawable.ic_account_circle_white_48dp)
+                        .transform(new ImageTransform())
+                        .into(img);
 
 
                 location.setOnClickListener(new View.OnClickListener() {

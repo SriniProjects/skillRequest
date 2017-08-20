@@ -24,7 +24,7 @@
             <ImageView
                 android:id="@+id/header"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="230dp"
                 android:fitsSystemWindows="true"
                 android:src="@drawable/user"
                 android:scaleType="centerCrop"
@@ -55,6 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <LinearLayout
             android:id="@+id/rview"
             android:layout_width="match_parent"
@@ -65,8 +66,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="20dp"
+                android:layout_marginTop="20dp"
                 android:padding="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="#ffffff"
                 android:id="@+id/details">
                 <TextView
@@ -259,104 +263,66 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:padding="15dp"
                 android:background="#ffffff"
                 android:id="@+id/details1">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="5dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/category"
                         android:text="Category"
+                        android:textStyle="bold"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:layout_alignParentStart="true"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_weight="1"
-                        />
+                        android:textColor="@color/colorPrimary" />
                     <Spinner
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/category1"
-                        android:layout_weight="1">
+                        android:paddingTop="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/textbox">
                     </Spinner>
-                </LinearLayout>
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorPrimary" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="5dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/availability"
                         android:text="Availability"
+                        android:paddingTop="10dp"
+                        android:textStyle="bold"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:layout_alignParentStart="true"
                         android:textColor="@color/colorPrimary"
-                        android:layout_weight="1"
                         />
                     <Spinner
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/textbox"
                         android:id="@+id/availability1">
                     </Spinner>
-                </LinearLayout>
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorPrimary" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Duration"
+                    android:textStyle="bold"
                     android:id="@+id/duration"
                     android:layout_alignParentStart="true"
                     android:paddingTop="10dp"
-                    android:textStyle="bold"
                     android:textColor="@color/colorPrimary"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
                     <EditText
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/duration1"
-                        android:hint="Duration"
-                        android:layout_weight="2"
+                        android:hint="hrs/day"
                         android:inputType="numberDecimal"
-                        android:background="@android:color/transparent"
-                        android:layout_alignParentStart="true"
                         android:textColor="@color/colorPrimary"
                         />
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="hrs/day"
-                        android:layout_alignParentEnd="true"
-                        android:paddingTop="10dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_weight="1"/>
-                </LinearLayout>
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorPrimary" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -367,13 +333,20 @@
                     android:paddingTop="10dp"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:background="@drawable/textbox">
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/description1"
                     android:paddingLeft="5dp"
+                    android:layout_marginTop="10dp"
                     android:paddingRight="5dp"
-                    android:background="@drawable/textbox"/>
+                    android:textAlignment="textStart"
+                    android:background="@android:color/transparent"/>
+                </LinearLayout>
             </LinearLayout>
             <Button
                 android:layout_width="match_parent"
@@ -384,5 +357,6 @@
                 android:textColor="#ffffff"
                 />
         </LinearLayout>
+
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

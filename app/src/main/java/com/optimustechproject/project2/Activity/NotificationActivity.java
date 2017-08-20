@@ -1,5 +1,6 @@
 package com.optimustechproject.project2.Activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -30,6 +33,14 @@ public class NotificationActivity extends AppCompatActivity {
     adapter_notification mAdapter;
     List<NotificationsPOJO> data=new ArrayList<NotificationsPOJO>();
     Gson gson=new Gson();
+    LinearLayout no_noti;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(NotificationActivity.this,NavigationActivity.class));
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,27 +54,39 @@ public class NotificationActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        no_noti=(LinearLayout)findViewById(R.id.no_noti);
+
+        mrecyclerView = (RecyclerView) findViewById(R.id.recycler);
+
         Type type = new TypeToken<List<NotificationsPOJO>>() {}.getType();
 
         if(DbHandler.contains(this,"notificationList")) {
             data = gson.fromJson(DbHandler.getString(this, "notificationList", ""), type);
-            mrecyclerView = (RecyclerView) findViewById(R.id.recycler);
 
-            Collections.sort(data, new Comparator<NotificationsPOJO>() {
-                @Override
-                public int compare(NotificationsPOJO o1, NotificationsPOJO o2) {
-                    return o2.getTimeStamp().compareTo(o1.getTimeStamp());
+            if(data.size()>0) {
+                no_noti.setVisibility(View.GONE);
+                Collections.sort(data, new Comparator<NotificationsPOJO>() {
+                    @Override
+                    public int compare(NotificationsPOJO o1, NotificationsPOJO o2) {
+                        return o2.getTimeStamp().compareTo(o1.getTimeStamp());
+                    }
+                });
+                // mrecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+                if (!data.toString().equals("")) {
+                    assert mrecyclerView != null;
+                    mrecyclerView.setHasFixedSize(true);
+                    linearLayoutManager = new LinearLayoutManager(this);
+                    mrecyclerView.setLayoutManager(linearLayoutManager);
+                    mAdapter = new adapter_notification(this, data);
+                    mrecyclerView.setAdapter(mAdapter);
                 }
-            });
-            // mrecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-            if (!data.toString().equals("")) {
-                assert mrecyclerView != null;
-                mrecyclerView.setHasFixedSize(true);
-                linearLayoutManager = new LinearLayoutManager(this);
-                mrecyclerView.setLayoutManager(linearLayoutManager);
-                mAdapter = new adapter_notification(this, data);
-                mrecyclerView.setAdapter(mAdapter);
             }
+            else{
+                mrecyclerView.setVisibility(View.GONE);
+            }
+        }
+        else{
+            mrecyclerView.setVisibility(View.GONE);
         }
     }
 
