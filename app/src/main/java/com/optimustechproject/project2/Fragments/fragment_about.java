@@ -78,7 +78,7 @@ public class fragment_about extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto","satyamg025@gmail.com", null));
+                        "mailto","srinivas.shikhar@gmail.com", null));
                 startActivity(Intent.createChooser(intent, "Choose an Email client :"));
             }
         });

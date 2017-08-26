@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.optimustechproject.project2.Adapter.adapter_crtd_trn_item;
 import com.optimustechproject.project2.Adapter.adapter_training_item;
 import com.optimustechproject.project2.Fragments.dialog_users_location;
 import com.optimustechproject.project2.Interface.CreatedTrainingsRequest;
@@ -109,7 +110,7 @@ public class ProfileActivity extends AppCompatActivity {
         private ColoredSnackbar coloredSnackbar;
         RecyclerView mrecyclerView;
         RecyclerView.LayoutManager manager;
-        adapter_training_item mAdapter;
+        adapter_crtd_trn_item mAdapter;
         ImageView img,pencil;
         Gson gson=new Gson();
 
@@ -209,7 +210,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     mrecyclerView.setHasFixedSize(true);
                                     manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
                                     mrecyclerView.setLayoutManager(manager);
-                                    mAdapter = new adapter_training_item(getContext(), response.body().getTrainings(),"createdTrainings");
+                                    mAdapter = new adapter_crtd_trn_item(getContext(), response.body().getTrainings(),"createdTrainings");
                                     mrecyclerView.setAdapter(mAdapter);
                                 } else {
                                     Toast.makeText(getContext(), "Session Expired", Toast.LENGTH_LONG).show();

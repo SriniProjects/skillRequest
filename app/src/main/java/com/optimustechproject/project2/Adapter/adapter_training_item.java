@@ -60,8 +60,8 @@ public class adapter_training_item extends RecyclerView.Adapter<adapter_training
                     intent.putExtra("index",in);
                     intent.putExtra("from",from);
                     intent.putExtra("key_learning1",data.getKeyLearning1().get(in));
-                    intent.putExtra("key_learning2",data.getKeyLearning1().get(in));
-                    intent.putExtra("key_learning3",data.getKeyLearning1().get(getAdapterPosition()));
+                    intent.putExtra("key_learning2",data.getKeyLearning2().get(in));
+                    intent.putExtra("key_learning3",data.getKeyLearning3().get(in));
                     intent.putExtra("title",data.getTitle().get(in));
                     intent.putExtra("date",data.getDate().get(in));
                     intent.putExtra("training_id",data.getId().get(in));

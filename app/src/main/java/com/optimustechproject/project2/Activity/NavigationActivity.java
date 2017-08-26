@@ -65,6 +65,7 @@ public class NavigationActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -167,11 +168,11 @@ public class NavigationActivity extends AppCompatActivity
     }
 
     public void updateTitle(Fragment f){
-        if(f.getClass().getName().equals("fragment_dashboard")){
+        if(f.getClass().getName().equals(fragment_dashboard.class.getName())){
             setTitle("Dashboard");
 
         }
-        if(f.getClass().getName().equals("fragment_about")){
+        if(f.getClass().getName().equals(fragment_about.class.getName())){
             setTitle("About Us");
 
         }
@@ -211,6 +212,7 @@ public class NavigationActivity extends AppCompatActivity
 
         } else if (id == R.id.create_training) {
             Intent intent=new Intent(NavigationActivity.this,CreateTraining.class);
+            intent.putExtra("operation","insert");
             startActivity(intent);
 
         } else if (id == R.id.about_us) {

@@ -49,6 +49,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.optimustechproject.project2.Interface.CategoriesRequest;
 import com.optimustechproject.project2.Interface.CreateTrainingRequest;
+import com.optimustechproject.project2.Interface.EditTrainingRequest;
 import com.optimustechproject.project2.Interface.TrainingDetailsRequest;
 import com.optimustechproject.project2.Models.CategoriesPOJO;
 import com.optimustechproject.project2.Models.CreateTrainingPOJO;
@@ -56,8 +57,10 @@ import com.optimustechproject.project2.Models.CreatedTrainingsPOJO;
 import com.optimustechproject.project2.R;
 import com.optimustechproject.project2.app.ColoredSnackbar;
 import com.optimustechproject.project2.app.DbHandler;
+import com.optimustechproject.project2.app.ImageTransform;
 import com.optimustechproject.project2.app.NetworkCheck;
 import com.optimustechproject.project2.app.ServiceGenerator;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -141,6 +144,39 @@ public class CreateTraining extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         availability.setAdapter(dataAdapter);
 
+        if(getIntent().getExtras().getString("operation").equals("edit")){
+            kl1.setText(getIntent().getExtras().getString("key_learning1"));
+            kl2.setText(getIntent().getExtras().getString("key_learning2"));
+            kl3.setText(getIntent().getExtras().getString("key_learning3"));
+            name.setText(getIntent().getExtras().getString("title"));
+            price.setText(getIntent().getExtras().getString("price"));
+            desc.setText(getIntent().getExtras().getString("title"));
+            desc.setText(getIntent().getExtras().getString("desc"));
+
+            int in=avail.indexOf(getIntent().getExtras().getString("availability"));
+            availability.setSelection(in);
+            date_et.setText(getIntent().getExtras().getString("date"));
+            //timings.setText(getIntent().getExtras().getString("timings"));
+            duration.setText(getIntent().getExtras().getString("duration"));
+            location.setText(getIntent().getExtras().getString("venue"));
+            submit.setText("Update");
+
+            try {
+                l = new LatLng(Double.valueOf(getIntent().getExtras().getString("latitude")), Double.valueOf(getIntent().getExtras().getString("longitude")));
+            }
+            catch(Exception e){
+                l=null;
+            }
+            Picasso
+                    .with(CreateTraining.this)
+                    .load(getIntent().getExtras().getString("photo"))
+                    .placeholder(R.mipmap.ic_launcher)
+                    .transform(new ImageTransform())
+                    .into(header);
+        }
+
+
+
         gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,7 +228,15 @@ public class CreateTraining extends AppCompatActivity {
                                 android.R.layout.simple_spinner_item, response.body().getCatName());
                         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         categories.setAdapter(dataAdapter);
-                        create();
+
+                        if(getIntent().getExtras().getString("operation").equals("insert")) {
+                            create();
+                        }
+                        else{
+                            int i=response.body().getCatName().indexOf(getIntent().getExtras().getString("category"));
+                            categories.setSelection(i);
+                            edit();
+                        }
 
                     }
                     else{
@@ -522,8 +566,160 @@ public class CreateTraining extends AppCompatActivity {
 //                if (!name.getText().toString().equals("") && (!location.getText().toString().equals("") && l!=null) && !date_et.getText().toString().equals("") && !kl1.getText().toString().equals("") && !kl2.getText().toString().equals("")  && !location.getText().toString().equals("")  && !kl3.equals("") && !duration.equals("") && !desc.equals("") && !fTime.equals("") && !tTime.equals("")) {
 //                      register();
 //                }
-                if (!name.getText().toString().equals("") && (!location.getText().toString().equals("") && l!=null) && !date_et.getText().toString().equals("") && !kl1.getText().toString().equals("") && !kl2.getText().toString().equals("")  && !location.getText().toString().equals("")  && !kl3.equals("") && !duration.equals("") && !desc.equals("")) {
+                if (!name.getText().toString().equals("") && (!location.getText().toString().equals("") && l!=null) && !date_et.getText().toString().equals("") && !kl1.getText().toString().equals("") && !kl2.getText().toString().equals("")  && !location.getText().toString().equals("")  && !kl3.getText().toString().equals("") && !duration.getText().toString().equals("") && !desc.getText().toString().equals("")) {
                     register();
+                }
+
+
+            }
+        });
+    }
+
+    public void edit(){
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                String myFormat = "dd/MM/yyyy";
+
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                date_et.setText(sdf.format(myCalendar.getTime()));
+
+            }
+
+        };
+
+
+        date_et.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(CreateTraining.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        location.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                if(hasFocus) {
+                    try {
+                        Intent intent =
+                                new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                                        .build(CreateTraining.this);
+                        startActivityForResult(intent, 1);
+                    } catch (GooglePlayServicesRepairableException e) {
+                        // TODO: Handle the error.
+                    } catch (GooglePlayServicesNotAvailableException e) {
+                        // TODO: Handle the error.
+                    }
+                }
+            }
+        });
+
+        fTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mHour = c.get(Calendar.HOUR_OF_DAY);
+                int mMinute = c.get(Calendar.MINUTE);
+
+                TimePickerDialog tpd = new TimePickerDialog(CreateTraining.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+                                fTime.setText(hourOfDay + ":" + minute);
+                            }
+                        }, mHour, mMinute, false);
+                tpd.show();
+            }
+        });
+
+        tTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mHour = c.get(Calendar.HOUR_OF_DAY);
+                int mMinute = c.get(Calendar.MINUTE);
+
+                TimePickerDialog tpd = new TimePickerDialog(CreateTraining.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+                                tTime.setText(hourOfDay + ":" + minute);
+                            }
+                        }, mHour, mMinute, false);
+                tpd.show();
+            }
+        });
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(name.getText().toString().equals("")){
+                    name.setError("Name required");
+                }
+
+                if(price.getText().toString().equals("")){
+                    price.setError("Price required");
+                }
+
+                if(date_et.getText().toString().equals("")){
+                    date_et.setError("Date required");
+                }
+
+                if(kl1.getText().toString().equals("")){
+                    kl1.setError("Key learning1 required");
+                }
+
+                if(kl2.getText().toString().equals("")){
+                    kl2.setError("Key learning2 required");
+                }
+
+                if(kl3.getText().toString().equals("")){
+                    kl3.setError("Key learning3 required");
+                }
+
+                if(duration.getText().toString().equals("")){
+                    duration.setError("Duration required");
+                }
+
+                if(desc.getText().toString().equals("")){
+                    desc.setError("Description required");
+                }
+
+//                if(fTime.getText().toString().equals("")){
+//                    fTime.setError("From timing required");
+//                }
+//
+//                if(tTime.getText().toString().equals("")){
+//                    tTime.setError("To timing required");
+//                }
+
+                if(l==null || location.getText().toString().equals("")){
+                    location.setError("Location required");
+                }
+
+
+//                if (!name.getText().toString().equals("") && (!location.getText().toString().equals("") && l!=null) && !date_et.getText().toString().equals("") && !kl1.getText().toString().equals("") && !kl2.getText().toString().equals("")  && !location.getText().toString().equals("")  && !kl3.equals("") && !duration.equals("") && !desc.equals("") && !fTime.equals("") && !tTime.equals("")) {
+//                      register();
+//                }
+                if (!name.getText().toString().equals("") && (!location.getText().toString().equals("") && l!=null) && !date_et.getText().toString().equals("") && !kl1.getText().toString().equals("") && !kl2.getText().toString().equals("")  && !location.getText().toString().equals("")  && !kl3.getText().toString().equals("") && !duration.getText().toString().equals("") && !desc.getText().toString().equals("")) {
+                    edit_details();
                 }
 
 
@@ -684,6 +880,88 @@ public class CreateTraining extends AppCompatActivity {
                                         if (!response.body().getError()) {
                                             DbHandler.putString(CreateTraining.this,"training_details",gson.toJson(response.body().getTrainings()));
                                             Toast.makeText(CreateTraining.this, "Training created successfully", Toast.LENGTH_LONG).show();
+                                            Intent intent = new Intent(CreateTraining.this, NavigationActivity.class);
+                                            startActivity(intent);
+                                        } else {
+                                            Toast.makeText(CreateTraining.this, "Session Expired", Toast.LENGTH_LONG).show();
+                                            DbHandler.unsetSession(CreateTraining.this, "isForcedLoggedOut");
+                                        }
+                                    }
+                                    else {
+                                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Error connecting to server2", Snackbar.LENGTH_SHORT);
+                                        coloredSnackbar.warning(snackbar).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<CreatedTrainingsPOJO> call, Throwable t) {
+                                    progressDialog.dismiss();
+                                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Error connecting to server", Snackbar.LENGTH_SHORT);
+                                    coloredSnackbar.warning(snackbar).show();
+                                }
+                            });
+
+                        } else {
+                            Toast.makeText(CreateTraining.this, "Session Expired", Toast.LENGTH_LONG).show();
+                            DbHandler.unsetSession(CreateTraining.this, "isForcedLoggedOut");
+                        }
+                    } else {
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Error connecting to server", Snackbar.LENGTH_SHORT);
+                        coloredSnackbar.warning(snackbar).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CreateTrainingPOJO> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Log.e("Error", String.valueOf(t));
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Error connecting to server", Snackbar.LENGTH_SHORT);
+                    coloredSnackbar.warning(snackbar).show();
+
+                }
+            });
+        }
+        else{
+            Snackbar snackbar=Snackbar.make(findViewById(android.R.id.content),"No internet connection",Snackbar.LENGTH_LONG);
+            coloredSnackbar.alert(snackbar).show();
+        }
+    }
+
+    public void edit_details(){
+
+        if(NetworkCheck.isNetworkAvailable(CreateTraining.this)) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Loading...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+            EditTrainingRequest editTrainingRequest = ServiceGenerator.createService(EditTrainingRequest.class, DbHandler.getString(CreateTraining.this, "bearer", ""));
+            //Call<CreateTrainingPOJO> call = createTrainingRequest.requestResponse(name.getText().toString(), String.valueOf(l.latitude), String.valueOf(l.longitude), location.getText().toString(), date_et.getText().toString(), kl1.getText().toString(), kl2.getText().toString(), kl3.getText().toString(), price.getText().toString(), String.valueOf(cat_id.get(categories.getSelectedItemPosition())), String.valueOf(availability.getSelectedItem()), duration.getText().toString(), desc.getText().toString(),fTime.getText().toString(),tTime.getText().toString(),filename);
+           //Toast.makeText(CreateTraining.this,filename,Toast.LENGTH_LONG).show();
+            Call<CreateTrainingPOJO> call = editTrainingRequest.requestResponse(getIntent().getExtras().getString("training_id"),name.getText().toString(), String.valueOf(l.latitude), String.valueOf(l.longitude), location.getText().toString(), date_et.getText().toString(), kl1.getText().toString(), kl2.getText().toString(), kl3.getText().toString(), price.getText().toString(), String.valueOf(cat_id.get(categories.getSelectedItemPosition())), String.valueOf(availability.getSelectedItem()), duration.getText().toString(), desc.getText().toString(),"","",filename);
+            Log.e("data", name.getText().toString() + " " + String.valueOf(l.latitude) + " " + String.valueOf(l.longitude) + " " + location.getText().toString() + " " + date_et.getText().toString() + " " + kl1.getText().toString() + " " + kl2.getText().toString() + " " + kl3.getText().toString() + " " + price.getText().toString() + " " + String.valueOf(cat_id.get(categories.getSelectedItemPosition())) + " " + String.valueOf(availability.getSelectedItem()) + " " + duration.getText().toString() + " " + desc.getText().toString());
+            call.enqueue(new Callback<CreateTrainingPOJO>() {
+                @Override
+                public void onResponse(Call<CreateTrainingPOJO> call, Response<CreateTrainingPOJO> response) {
+                    progressDialog.dismiss();
+                    if (response.code() == 200) {
+                        if (!response.body().getError()) {
+
+                            progressDialog = new ProgressDialog(CreateTraining.this);
+                            progressDialog.setMessage("Loading...");
+                            progressDialog.setCancelable(false);
+                            progressDialog.show();
+
+                            TrainingDetailsRequest trainingDetailsRequest = ServiceGenerator.createService(TrainingDetailsRequest.class, DbHandler.getString(CreateTraining.this, "bearer", ""));
+                            Call<CreatedTrainingsPOJO> call2 = trainingDetailsRequest.requestResponse();
+                            call2.enqueue(new Callback<CreatedTrainingsPOJO>() {
+                                @Override
+                                public void onResponse(Call<CreatedTrainingsPOJO> call, Response<CreatedTrainingsPOJO> response) {
+                                    progressDialog.dismiss();
+                                    if (response.code() == 200) {
+                                        if (!response.body().getError()) {
+                                            DbHandler.putString(CreateTraining.this,"training_details",gson.toJson(response.body().getTrainings()));
+                                            Toast.makeText(CreateTraining.this, "Training updated successfully", Toast.LENGTH_LONG).show();
                                             Intent intent = new Intent(CreateTraining.this, NavigationActivity.class);
                                             startActivity(intent);
                                         } else {

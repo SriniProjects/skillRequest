@@ -168,7 +168,7 @@ public class fragment_dashboard  extends Fragment implements OnMapReadyCallback,
         final int ind=markers.indexOf(marker);
         //Toast.makeText(getContext(),String.valueOf(ind),Toast.LENGTH_LONG).show();
         new AlertDialog.Builder(getContext()).setTitle(data.getTitle().get(ind))
-                .setMessage(data.getCategory().get(ind)+"\n"+data.getPrice().get(ind))
+                .setMessage(data.getCategory().get(ind)+"\nRs. "+data.getPrice().get(ind))
                 .setPositiveButton("View more", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -177,8 +177,8 @@ public class fragment_dashboard  extends Fragment implements OnMapReadyCallback,
                         intent.putExtra("index",ind);
                         intent.putExtra("from","dashboard");
                         intent.putExtra("key_learning1",data.getKeyLearning1().get(ind));
-                        intent.putExtra("key_learning2",data.getKeyLearning1().get(ind));
-                        intent.putExtra("key_learning3",data.getKeyLearning1().get(ind));
+                        intent.putExtra("key_learning2",data.getKeyLearning2().get(ind));
+                        intent.putExtra("key_learning3",data.getKeyLearning3().get(ind));
                         intent.putExtra("title",data.getTitle().get(ind));
                         intent.putExtra("date",data.getDate().get(ind));
                         intent.putExtra("training_id",data.getId().get(ind));
