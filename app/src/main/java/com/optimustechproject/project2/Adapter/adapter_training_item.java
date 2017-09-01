@@ -52,6 +52,8 @@ public class adapter_training_item extends RecyclerView.Adapter<adapter_training
             location=(TextView)itemView.findViewById(R.id.location);
             imageView=(ImageView) itemView.findViewById(R.id.imageView);
 
+            //////////// VIEW TRAINING DETAILS //////////
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

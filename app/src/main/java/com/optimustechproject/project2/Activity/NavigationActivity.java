@@ -87,6 +87,8 @@ public class NavigationActivity extends AppCompatActivity
 
         dataumPOJO=gson.fromJson(DbHandler.getString(this,"login_data","{}"),LoginDataumPOJO.class);
 
+        ////////////// REFRESH TRAINING DETAILS /////////
+
         if(NetworkCheck.isNetworkAvailable(this)){
             progressDialog = new ProgressDialog(NavigationActivity.this);
             progressDialog.setMessage("Loading...");

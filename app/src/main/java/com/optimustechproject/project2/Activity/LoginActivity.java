@@ -159,6 +159,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
 
+
+    /////////  GOOGLE SIGN IN ///////
+
     private void handleSignInResult(GoogleSignInResult result) {
         dialog.dismiss();
         if (result.isSuccess()) {
@@ -173,6 +176,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show();
         }
     }
+
+
+    ////// CHECK IF USER ALREADY REGISTERED ON GOOGLE LOGIN /////
 
     public void checkLogin(final String name, final String email){
 
@@ -193,6 +199,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     if(response.code()==200) {
                         progressDialog.dismiss();
                         if(response.body().getError()){
+                            ////  if user EXISTS /////////
+
                             DbHandler.setSession(LoginActivity.this,gson.toJson(response.body().getData()),response.body().getData().getToken());
                             DbHandler.putString(LoginActivity.this,"training_details",gson.toJson(response.body().getData().getTrainings()));
                             Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
@@ -200,6 +208,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             finish();
                         }
                         else{
+                            ////  if user NOT EXISTS /////////
                             Intent intent=new Intent(LoginActivity.this,MainActivity.class);
                             intent.putExtra("name",name);
                             intent.putExtra("email",email);
@@ -239,6 +248,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     }
 
+
+    ///////CALL NORMAL LOGIN SERVICE ////////
     public void login(){
 
         if(NetworkCheck.isNetworkAvailable(LoginActivity.this)){

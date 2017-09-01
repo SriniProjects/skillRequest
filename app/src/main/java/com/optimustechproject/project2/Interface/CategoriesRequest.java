@@ -12,6 +12,6 @@ import retrofit2.http.Query;
  */
 
 public interface CategoriesRequest {
-    @GET("skills_req/FetchCategories.php")
+    @GET("skillQuest201702/FetchCategories.php")
     Call<CategoriesPOJO> requestResponse();
 }

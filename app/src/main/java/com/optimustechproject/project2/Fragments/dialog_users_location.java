@@ -38,6 +38,8 @@ public class dialog_users_location extends DialogFragment implements OnMapReadyC
     LoginDataumPOJO data;
     Gson gson=new Gson();
 
+    //////////// DISPLAY USER'S LOCATION ON GOOGLE MAPS IN PROFILE TAB ON LOCATION CLICK ////////
+
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final LayoutInflater inflater = getActivity().getLayoutInflater();

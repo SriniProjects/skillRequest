@@ -165,6 +165,8 @@ public class fragment_dashboard  extends Fragment implements OnMapReadyCallback,
     @Override
     public boolean onMarkerClick(Marker marker) {
 
+        ///////////// DIALOG ON TRAINING MARKER CLICK //////
+
         final int ind=markers.indexOf(marker);
         //Toast.makeText(getContext(),String.valueOf(ind),Toast.LENGTH_LONG).show();
         new AlertDialog.Builder(getContext()).setTitle(data.getTitle().get(ind))
@@ -172,6 +174,8 @@ public class fragment_dashboard  extends Fragment implements OnMapReadyCallback,
                 .setPositiveButton("View more", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        /////////// VIEW MORE TRAINING DETAILS /////////
 
                         Intent intent=new Intent(getContext(), TrainingDetails.class);
                         intent.putExtra("index",ind);

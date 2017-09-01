@@ -13,6 +13,6 @@ import retrofit2.http.Query;
  */
 
 public interface CheckLoginRequest {
-    @GET("skills_req/CheckLogin.php")
+    @GET("skillQuest201702/CheckLogin.php")
     Call<CheckLoginPOJO> requestResponse(@Query("email") String email,@Query("fcm") String fcm);
 }

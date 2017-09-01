@@ -12,6 +12,6 @@ import retrofit2.http.Query;
  */
 
 public interface EnquiriesRequest {
-    @GET("skills_req/Enquiries.php")
+    @GET("skillQuest201702/Enquiries.php")
     Call<EnquiriesPOJO> requestResponse(@Query("training_id") String t_id, @Query("message") String msg);
 }

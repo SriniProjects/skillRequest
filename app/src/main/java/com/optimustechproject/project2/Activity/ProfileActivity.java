@@ -67,6 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Profile");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -117,6 +118,8 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                                  Bundle savedInstanceState) {
+
+            ///////////// PROFILE TAB ////////
 
             if(getArguments().getInt(ARG_SECTION_NUMBER)==1) {
                 rootView = inflater.inflate(R.layout.fragment_profile, container, false);
@@ -187,6 +190,8 @@ public class ProfileActivity extends AppCompatActivity {
 
 
             }
+            /////////// CREATED TRAININGS TAB /////////
+
             if(getArguments().getInt(ARG_SECTION_NUMBER)==2){
                 rootView = inflater.inflate(R.layout.fragment_created_trainings, container, false);
 
@@ -249,6 +254,8 @@ public class ProfileActivity extends AppCompatActivity {
 
 
             }
+            ///////////// PURCHASED TRAININGS TAB //////////
+
             if(getArguments().getInt(ARG_SECTION_NUMBER)==3){
                 rootView = inflater.inflate(R.layout.fragment_registered_trainings, container, false);
 

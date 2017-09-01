@@ -12,6 +12,6 @@ import retrofit2.http.Query;
  */
 
 public interface CreatedTrainingsRequest {
-    @GET("skills_req/CreatedTrainings.php")
+    @GET("skillQuest201702/CreatedTrainings.php")
     Call<CreatedTrainingsPOJO> requestResponse();
 }

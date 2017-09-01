@@ -26,6 +26,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
@@ -98,10 +99,17 @@ public class MainActivity extends AppCompatActivity {
     String filepath="",filename="";
     int flg_pr=0;
 
+    //////////////////////  REGISTRATION ACTIVITY /////////
+
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+         Toolbar toolbar;
+         toolbar=(Toolbar)findViewById(R.id.toolbar);
+         toolbar.setTitle("Registration");
+         setSupportActionBar(toolbar);
 
         first_name=(EditText)findViewById(R.id.first_name);
         last_name=(EditText)findViewById(R.id.last_name);
@@ -115,9 +123,14 @@ public class MainActivity extends AppCompatActivity {
 
         male=(ImageView)findViewById(R.id.male);
         female=(ImageView)findViewById(R.id.female);
+         submit=(AppCompatButton)findViewById(R.id.register);
 
+
+         //////////// IF EDIT PROFILE CONTEXT ////////
 
          if(getIntent().getExtras().getString("status").equals("update")){
+
+             getSupportActionBar().setTitle("Update Profile");
              LoginDataumPOJO data=gson.fromJson(DbHandler.getString(MainActivity.this,"login_data","{}"),LoginDataumPOJO.class);
              String n[]=data.getName().split(" ");
              first_name.setText(n[0]);
@@ -129,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
              password.setText(data.getPwd());
              l=new LatLng(Double.valueOf(data.getLatitude()),Double.valueOf(data.getLongitude()));
 
+             submit.setText("Update");
              String ar[]=data.getPhoto().split("/");
              filename=ar[ar.length-1];
 
@@ -153,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
                  male.setColorFilter(null);
              }
          }
+
+         /////////// CHOOSE IMAGE ////////
 
          img.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -186,7 +202,9 @@ public class MainActivity extends AppCompatActivity {
              }
          });
 
-        submit=(AppCompatButton)findViewById(R.id.register);
+
+
+         //////////////////// IF REGISTRATION on google sign in/////////
 
          if(!getIntent().getExtras().getString("regType").equals("normal")){
              String[] arr=getIntent().getExtras().getString("name").split(" ");
@@ -489,6 +507,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /////////////////// UPLOAD IMAGE ///////////////////
 
     private void uploadFile(final String filePath, final String fileName) {
         class UF extends AsyncTask<String, String, String> {
@@ -519,7 +538,7 @@ public class MainActivity extends AppCompatActivity {
                     HttpPost httpPost;
 
                     HttpClient httpClient = new DefaultHttpClient();
-                    httpPost = new HttpPost("http://optimustechproject2017002.000webhostapp.com/skills_req/UploadFile_profile.php");
+                    httpPost = new HttpPost("http://www.srini-myprojects94.in/skillQuest201702/UploadFile_profile.php");
 
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -573,6 +592,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+    /////////////////////// EDIT PROFILE ////////////
 
     public void updateProfile(String pwd){
         if(NetworkCheck.isNetworkAvailable(MainActivity.this)){

@@ -56,6 +56,8 @@ public class adapter_crtd_trn_item extends RecyclerView.Adapter<adapter_crtd_trn
     Gson gson=new Gson();
     private ColoredSnackbar coloredSnackbar;
 
+    ///////////////////// CREATED TRAINING RECYCLER VIEW ADAPTER //////////////
+
     public adapter_crtd_trn_item(Context context,TrainingsPOJO data,String from) {
         this.data=data;
         this.context=context;
@@ -80,6 +82,8 @@ public class adapter_crtd_trn_item extends RecyclerView.Adapter<adapter_crtd_trn
             edit=(ImageView)itemView.findViewById(R.id.edit);
             delete=(ImageView)itemView.findViewById(R.id.delete);
 
+            ///////////////////// ENABLE EDIT AND DELETE TRAINING LAYOUT ON LONG CLICK ////////
+
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -88,6 +92,8 @@ public class adapter_crtd_trn_item extends RecyclerView.Adapter<adapter_crtd_trn
                     return false;
                 }
             });
+
+            ////////////// DELETE TRAINING //////////
 
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -120,6 +126,8 @@ public class adapter_crtd_trn_item extends RecyclerView.Adapter<adapter_crtd_trn
                                                 progressDialog.setMessage("Loading...");
                                                 progressDialog.setCancelable(false);
                                                 progressDialog.show();
+
+                                                /////////////// REFRESH TRAINING DETAILS ///////////
 
                                                 TrainingDetailsRequest trainingDetailsRequest = ServiceGenerator.createService(TrainingDetailsRequest.class, DbHandler.getString(context, "bearer", ""));
                                                 Call<CreatedTrainingsPOJO> call2 = trainingDetailsRequest.requestResponse();
@@ -200,6 +208,8 @@ public class adapter_crtd_trn_item extends RecyclerView.Adapter<adapter_crtd_trn
                     }).create().show();
                 }
             });
+
+            /////////////// EDIT TRAINING /////////////
 
             edit.setOnClickListener(new View.OnClickListener() {
                 @Override

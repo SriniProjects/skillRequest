@@ -10,6 +10,6 @@ import retrofit2.http.GET;
  */
 
 public interface TrainingDetailsRequest {
-    @GET("skills_req/TrainingDetails.php")
+    @GET("skillQuest201702/TrainingDetails.php")
     Call<CreatedTrainingsPOJO> requestResponse();
 }

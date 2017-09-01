@@ -21,6 +21,9 @@ public class fragment_about extends Fragment {
     View parentView;
     ImageView app_icon,fb,insta,g_plus,twi,link;
     CardView contact;
+
+    /////////////// APP AND DEVELOPER DETAILS //////////
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {

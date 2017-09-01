@@ -11,6 +11,6 @@ import retrofit2.http.Query;
  */
 
 public interface RegistrationRequest {
-    @GET("skills_req/Registration.php")
+    @GET("skillQuest201702/Registration.php")
     Call<RegDataPOJO> requestResponse(@Query("first_name") String first_name, @Query("last_name") String last_name, @Query("dob") String dob, @Query("gender") String gender, @Query("mobile") String mobile,@Query("latitude") String latitude,@Query("longitude") String longitude, @Query("email") String username, @Query("password") String password,@Query("location") String location, @Query("fcm") String fcm,@Query("fileName") String fileName);
 }

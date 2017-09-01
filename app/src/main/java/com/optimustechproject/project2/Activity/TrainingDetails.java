@@ -93,6 +93,8 @@ public class TrainingDetails extends AppCompatActivity {
             enquire.setClickable(false);
         }
 
+        /////////////// ON ENQUIRE TRAINING ///////////
+
         enquire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -46,7 +46,6 @@ public class AllTrainings extends AppCompatActivity implements SearchView.OnQuer
 
         data=gson.fromJson(DbHandler.getString(this,"training_details","{}"),TrainingsPOJO.class);
         mrecyclerView = (RecyclerView) findViewById(R.id.recycler);
-       // mrecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
         assert mrecyclerView != null;
         mrecyclerView.setHasFixedSize(true);
         manager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
@@ -94,6 +93,7 @@ public class AllTrainings extends AppCompatActivity implements SearchView.OnQuer
 //
 //        return true;
 //    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id= item.getItemId();
@@ -114,6 +114,10 @@ public class AllTrainings extends AppCompatActivity implements SearchView.OnQuer
         mAdapter.setFilter(pojo);
         return true;
     }
+
+
+    /////////////////// SEARCH TRAININGS //////////////////
+
     private TrainingsPOJO filter(TrainingsPOJO models, String query) {
         query = query.toLowerCase();
         final TrainingsPOJO filteredModelList = gson.fromJson("{}",TrainingsPOJO.class);
@@ -162,84 +166,5 @@ public class AllTrainings extends AppCompatActivity implements SearchView.OnQuer
         return filteredModelList;
     }
 
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 1) {
-//            if(resultCode == RESULT_OK) {
-//                if (data == null) {
-//                    Toast.makeText(this, "No category choosen", Toast.LENGTH_LONG);
-//                } else {
-//                    String c = data.getStringExtra("category");
-//                    sorted_by_category=new ArrayList<>();
-//                    for(int i=0;i<trainings.size();i++){
-//                        if(trainings.get(i).category.equals(c)){
-//                            sorted_by_category.add(trainings.get(i));
-//                        }
-//                    }
-//                    items=sorted_by_category;
-//                    mAdapter.notifyDataSetChanged();
-//                }
-//            }
-//        }
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id= item.getItemId();
-//        switch (id) {
-//            case R.id.home:
-//                onBackPressed();
-//            case R.id.srt_by_price:
-//                // app icon in action bar clicked; go home
-//                Collections.sort(items, new Comparator<item>() {
-//                    @Override
-//                    public int compare(item lhs, item rhs) {
-//                        Float l = Float.parseFloat(lhs.price);
-//                        Float r = Float.parseFloat(rhs.price);
-//                        return l.compareTo(r);
-//                    }
-//                });
-//                mAdapter.notifyDataSetChanged();
-//                Toast.makeText(this, "Highest price first", Toast.LENGTH_LONG);
-//                return true;
-//            case R.id.srt_by_name:
-//                // app icon in action bar clicked; go home
-//                Collections.sort(items, new Comparator<item>() {
-//                    @Override
-//                    public int compare(item lhs, item rhs) {
-//                        return lhs.title.toLowerCase().compareTo(rhs.title.toLowerCase());
-//                    }
-//                });
-//                adapter.notifyDataSetChanged();
-//                return true;
-//            case R.id.srt_by_category:
-//                // app icon in action bar clicked; go home
-//                fetch_categories();
-//                return true;
-//            case R.id.all_trainings:
-//                // app icon in action bar clicked; go home
-//                items = trainings;
-//                mAdapter.notifyDataSetChanged();
-//                Toast.makeText(this, "Highest price first", Toast.LENGTH_LONG);
-//                return true;
-//
-//        }
-//        return super.onOptionsItemSelected(item);
-//
-//    }
-
-
-//    @Override
-//    public boolean onQueryTextSubmit(String query) {
-//        mAdapter.filter(query);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onQueryTextChange(String newText) {
-//        mAdapter.filter(newText);
-//        return true;
-//    }
+    /////////////////// SEARCH TRAININGS ENDS//////////////////
 }

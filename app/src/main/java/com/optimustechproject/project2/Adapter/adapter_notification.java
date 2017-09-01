@@ -40,7 +40,7 @@ public class adapter_notification extends RecyclerView.Adapter<adapter_notificat
 
     public class view_holder extends RecyclerView.ViewHolder {
         TextView title, message,time;
-        ImageView close;
+        ImageView close,image;
 
         public view_holder(View itemView) {
             super(itemView);
@@ -49,6 +49,7 @@ public class adapter_notification extends RecyclerView.Adapter<adapter_notificat
             message = (TextView) itemView.findViewById(R.id.message);
             close = (ImageView) itemView.findViewById(R.id.close);
             title=(TextView)itemView.findViewById(R.id.time);
+            image=(ImageView)itemView.findViewById(R.id.image);
 
         }
     }
@@ -64,6 +65,9 @@ public class adapter_notification extends RecyclerView.Adapter<adapter_notificat
         holder.title.setText(data.get(position).getTitle());
         holder.message.setText(data.get(position).getMessage());
         holder.title.setText(data.get(position).getTimeStamp());
+
+        ////////////// REMOVE NOTIFICATION //////////
+
         holder.close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +81,13 @@ public class adapter_notification extends RecyclerView.Adapter<adapter_notificat
                 }
             }
         });
+        try {
+            Picasso.with(context).load(data.get(position).getImageUrl()).placeholder(R.mipmap.ic_launcher_round).into(holder.image);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            holder.image.setVisibility(View.GONE);
+        }
 
     }
 

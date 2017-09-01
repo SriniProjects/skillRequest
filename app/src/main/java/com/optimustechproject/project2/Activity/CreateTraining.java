@@ -144,6 +144,8 @@ public class CreateTraining extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         availability.setAdapter(dataAdapter);
 
+
+        /////////////////////////////  IF EDIT TRAINING CONTEXT  ////////////////////////
         if(getIntent().getExtras().getString("operation").equals("edit")){
             kl1.setText(getIntent().getExtras().getString("key_learning1"));
             kl2.setText(getIntent().getExtras().getString("key_learning2"));
@@ -152,6 +154,8 @@ public class CreateTraining extends AppCompatActivity {
             price.setText(getIntent().getExtras().getString("price"));
             desc.setText(getIntent().getExtras().getString("title"));
             desc.setText(getIntent().getExtras().getString("desc"));
+
+            getSupportActionBar().setTitle("Edit Training");
 
             int in=avail.indexOf(getIntent().getExtras().getString("availability"));
             availability.setSelection(in);
@@ -177,6 +181,7 @@ public class CreateTraining extends AppCompatActivity {
 
 
 
+        ///////////////// CHOOSE TRAINING IMAGE ////////////
         gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,6 +192,7 @@ public class CreateTraining extends AppCompatActivity {
 //                    progressDialog.setCancelable(false);
 //                    progressDialog.show();
 
+                    /////// CHECK FOR PERMISSION ////////////
                     if(isReadStorageAllowed()) {
                         Intent intent = new Intent();
                         intent.setType("*/*");
@@ -208,6 +214,8 @@ public class CreateTraining extends AppCompatActivity {
                 }
             }
         });
+
+        ////////////      GET CATEGORIES  ///////////
 
         if(NetworkCheck.isNetworkAvailable(this)){
 
@@ -286,6 +294,9 @@ public class CreateTraining extends AppCompatActivity {
 
         if (result == PackageManager.PERMISSION_GRANTED)
             return true;
+//        else{
+//
+//        }
 
         return false;
     }
@@ -422,6 +433,8 @@ public class CreateTraining extends AppCompatActivity {
 
 
 
+
+    ///////////////////  CREATE TRAINING ///////////////////
 
     public void create(){
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -574,6 +587,9 @@ public class CreateTraining extends AppCompatActivity {
             }
         });
     }
+
+
+    ////////////////////////     EDIT TRAINING  /////////////
 
     public void edit(){
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -762,6 +778,9 @@ public class CreateTraining extends AppCompatActivity {
         }
     }
 
+
+    /////////////////// UPLOAD TRAINING IMAGE //////////
+
     private void uploadFile(final String filePath, final String fileName) {
         class UF extends AsyncTask<String, String, String> {
             InputStream inputStream;
@@ -791,7 +810,7 @@ public class CreateTraining extends AppCompatActivity {
                     HttpPost httpPost;
 
                     HttpClient httpClient = new DefaultHttpClient();
-                        httpPost = new HttpPost("http://optimustechproject2017002.000webhostapp.com/skills_req/UploadFile.php");
+                        httpPost = new HttpPost("http://www.srini-myprojects94.in/skillQuest201702/UploadFile.php");
 
                     httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -845,6 +864,8 @@ public class CreateTraining extends AppCompatActivity {
 
 
     }
+
+    /////////////// CALL REGISTER TRAINING SERVICE ////////
 
     public void register(){
 
@@ -926,6 +947,8 @@ public class CreateTraining extends AppCompatActivity {
             coloredSnackbar.alert(snackbar).show();
         }
     }
+
+    ////////// CALL EDIT TRAINING SERVICE //////////
 
     public void edit_details(){
 

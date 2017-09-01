@@ -124,9 +124,14 @@ public class SplashActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
 
+
         if (DbHandler.getBoolean(this, "isLoggedIn", false)) {
+            ////////// IF LOGGED  IN ////////
+
             startActivity(new Intent(this, NavigationActivity.class));
         } else {
+            ////////// IF NOT LOGGED  IN ////////
+
             startActivity(new Intent(this, LoginActivity.class));
         }
         finish();

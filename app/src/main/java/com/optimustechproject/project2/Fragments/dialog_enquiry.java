@@ -49,6 +49,9 @@ public class dialog_enquiry extends DialogFragment {
     public Button send;
     private ColoredSnackbar coloredSnackbar;
 
+    ///// NOT USED NOW ////////////
+/////////////////// ENQUIRY DIALOG /////////////
+
     public static dialog_enquiry instance(String training_id){
 
         dialog_enquiry dialog_enquiry=new dialog_enquiry();

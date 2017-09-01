@@ -11,7 +11,7 @@ import retrofit2.http.Query;
  */
 
 public interface DeleteTrainingRequest {
-    @GET("skills_req/DeleteTraining.php")
+    @GET("skillQuest201702/DeleteTraining.php")
     Call<CreateTrainingPOJO> requestResponse(@Query("training_id") String training_id);
 
 }

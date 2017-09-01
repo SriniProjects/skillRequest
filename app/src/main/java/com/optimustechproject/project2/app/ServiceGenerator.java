@@ -16,7 +16,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
-    public static String API_BASE_URL = "http://optimustechproject2017002.000webhostapp.com/";
+    public static String API_BASE_URL = "http://www.srini-myprojects94.in/";
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS);
 
